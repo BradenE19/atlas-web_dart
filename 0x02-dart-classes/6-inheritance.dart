@@ -1,34 +1,43 @@
 import '6-password.dart';
 
 class User extends Password {
-  int? id;
+
   String name;
   int age;
   double height;
+  int id;
   String? user_password;
 
-  User(
-      {int? this.id,
-      required this.name,
-      required this.age,
-      required this.height,
-      String? this.user_password});
+  User({this.name = '', this.age = 0, this.height = 0.0, this.id = 0, this.user_password});
 
-  Map toJson() {
-    return {"id": id, "name": name, "age": age, "height": height};
+  String showName() {
+    return 'Hello $name';
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'name': name,
+      'age': age,
+      'height': height,
+    };
   }
 
   static User fromJson(Map<dynamic, dynamic> userJson) {
     return User(
-        id: userJson['id'],
-        name: userJson['name'],
-        age: userJson['age'],
-        height: userJson['height']);
+      id: userJson['id'],
+      name: userJson['name'],
+      age: userJson['age'],
+      height: userJson['height'],
+      user_password: userJson['user_password'],
+    );
+  }
+
+  bool isPasswordValid() {
+    return Password(password: user_password ?? '').isValid();
   }
 
   String toString() {
-    final pass = Password(password: user_password);
-
-    return "User(id : $id ,name: $name, age: $age, height: $height, Password: ${pass.isValid()})";
+    return 'User(id: $id, name: $name, age: $age, height: $height, Password: ${isPasswordValid()})';
   }
 }
