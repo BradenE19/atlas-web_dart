@@ -1,44 +1,33 @@
 class Password {
-  late String _password;
+  String _password = '';
 
-  // Constructor initializes the private _password property
-  Password({required String password}) {
-    _password = password;
+  Password({password = String}) {
+    this._password = password;
+  }
+
+  String get password {
+    return this._password;
+  }
+
+  void set password(String password) {
+    this._password = password;
   }
 
   bool isValid() {
-    // Check length
-    if (_password.length < 8 || _password.length > 16) {
-      return false;
+    if (this._password.length >= 8 && this._password.length <= 16) {
+      if (this._password.contains(RegExp(r'[A-Z]')) &&
+          this._password.contains(RegExp(r'[a-z]'))) {
+        if (this._password.contains(RegExp(r'[0-9]'))) {
+          return true;
+        }
+      }
     }
 
-    // Check for uppercase letters
-    if (!_password.contains(RegExp(r'[A-Z]'))) {
-      return false;
-    }
-
-    // Check for lowercase letters
-    if (!_password.contains(RegExp(r'[a-z]'))) {
-      return false;
-    }
-
-    // Check for numbers
-    if (!_password.contains(RegExp(r'[0-9]'))) {
-      return false;
-    }
-
-    // All checks passed
-    return true;
+    return false;
   }
 
   @override
   String toString() {
-    return "Your Password is: $_password";
-  }
-
-  String get password => _password;
-
-  set password(String newPassword) {
-    _password = newPassword;
+    return 'Your Password is: ${this._password}';
   }
 }
